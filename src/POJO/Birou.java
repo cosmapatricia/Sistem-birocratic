@@ -1,12 +1,16 @@
-package da;
+package POJO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Document {
+public class Birou {
 
-	public List<Act> acte = new ArrayList<>();
+	private List<Act> acte = new ArrayList<Act>();
 
+	public Birou(List<Act> acte) {
+		this.acte.addAll(acte);
+	}
+	
 	public List<Act> getActe() {
 		return acte;
 	}

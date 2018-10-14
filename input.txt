@@ -10,5 +10,3 @@
 "titlu de proprietate" "buletin"
 "pasaport" "buletin"
 "permis de conducere" "buletin" "certificat de nastere" "cazier"
-
-
