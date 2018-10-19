@@ -1,8 +1,8 @@
 4
-"certificat de nastere" "buletin" "certificat de casatorie" "certificat de deces"
-"diploma de bacalaureat" "diploma de licenta" "carnet de student" "legitimatie de student" "card biblioteca"
-"titlu de proprietate" "card de debit" "contract locuinta"
-"pasaport" "viza" "permis de conducere" "cazier"
+"2" "certificat de nastere" "buletin" "certificat de casatorie" "certificat de deces"
+"1" "diploma de bacalaureat" "diploma de licenta" "carnet de student" "legitimatie de student" "card biblioteca"
+"3" "titlu de proprietate" "card de debit" "contract locuinta"
+"2" "pasaport" "viza" "permis de conducere" "cazier"
 
 "buletin" "certificat de nastere" "certificat de casatorie" "contract locuinta"
 "diploma de bacalaureat" "buletin" "certificat de nastere"

@@ -3,6 +3,7 @@ package POJO;
 public class Act {
 
 	private String nume;
+	private int luat = 0;
 	
 	public Act (String nume) {
 		this.nume = nume;
@@ -14,5 +15,13 @@ public class Act {
 
 	public void setNume(String nume) {
 		this.nume = nume;
+	}
+	
+	public int getLuat() {
+		return luat;
+	}
+	
+	public void setLuat() {
+		this.luat = 1;
 	}
 }

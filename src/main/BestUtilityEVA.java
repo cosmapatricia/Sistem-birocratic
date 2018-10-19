@@ -48,9 +48,16 @@ public class BestUtilityEVA {
 		
 		// initializing offices and assign them the documents they can delivery
 		for(int i = 0; i < numberOfOffices; ++i) {
+			String nume = "Birou"+ (i+1);
 			String line = scanner.nextLine();
-			fillFromSeparated(acte, line.split("\" "), 0);
-			offices.add(new Birou(acte));
+			String[] separator = line.split("\" ");
+			//starting from 1 because index=0 is the no of offices
+			fillFromSeparated(acte, separator, 1);
+			int nrGhisee = Integer.parseInt(removeQuotes(separator[0]));
+			offices.add(new Birou(nume, nrGhisee, acte));
+			for(int j = 0; j < nrGhisee; j++) {
+				
+			}
 			acte.clear();
 		}
 		
@@ -78,10 +85,9 @@ public class BestUtilityEVA {
 	}
 	
 	public static void printOffices(List<Birou> offices) {
-		int i = 1;
 		
 		for(Birou office : offices) {
-			System.out.println("Biroul "+ i++ + " poate emite urmatoarele acte:");
+			System.out.println(office.getNume() + " cu " + office.getNrGhisee() + " ghisee " + "poate emite urmatoarele acte:");
 			List<Act> acte = office.getActe();
 			for(Act act : acte) {
 				System.out.print(act.getNume() + ", ");
