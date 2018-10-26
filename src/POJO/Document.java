@@ -9,6 +9,15 @@ public class Document {
 	private String nume;
 	// the other documents we need to have in order to get this document
 	private List<Act> acte = new ArrayList<>();
+	private int luat = 0;
+
+	public int getLuat() {
+		return luat;
+	}
+
+	public void setLuat(int luat) {
+		this.luat = luat;
+	}
 
 	public Document(List<Act> acte, String nume) {
 		this.acte.addAll(acte);

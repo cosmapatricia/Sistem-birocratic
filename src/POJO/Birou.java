@@ -3,16 +3,26 @@ package POJO;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Birou {
+import main.BestUtilityEVA;
+
+public class Birou implements Runnable {
 
 	private String nume;
 	private int nrGhisee;
-	private List<Act> acte = new ArrayList<Act>();
+	private List<Ghiseu> ghisee = new ArrayList<Ghiseu>();
 
 	public Birou(String nume, int nrGhisee, List<Act> acte) {
 		this.nume = nume;
 		this.nrGhisee = nrGhisee;
-		this.acte.addAll(acte);
+		for(int j = 0; j < nrGhisee; j++) {
+			ghisee.add(new Ghiseu(acte));
+		}
+	}
+	public List<Ghiseu> getGhisee() {
+		return ghisee;
+	}
+	public void setGhisee(List<Ghiseu> ghisee) {
+		this.ghisee = ghisee;
 	}
 	public String getNume() {
 		return nume;
@@ -26,19 +36,23 @@ public class Birou {
 	public void setNrGhisee(int nrGhisee) {
 		this.nrGhisee = nrGhisee;
 	}
-	public List<Act> getActe() {
-		return acte;
-	}
+	
+	@Override
+	public void run() {
 
-	public void setActe(List<Act> acte) {
-		this.acte = acte;
-	}
-	public boolean cautAct(Act act) {
-		for(int i = 0; i < acte.size(); i ++) {
-			if(acte.get(i).getNume().equals(act.getNume())) {
-				return true;
+		while(true) {
+			int index = BestUtilityEVA.getRandInRange(0, ghisee.size() - 1);
+			ghisee.get(index).setClosed(true);
+			try {
+				Thread.sleep(4000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				System.out.println("Problems mit dem Threads, m8.");
 			}
+			ghisee.get(index).setClosed(false);
+			//System.out.println("Works");
+			
 		}
-		return false;
+		
 	}
 }

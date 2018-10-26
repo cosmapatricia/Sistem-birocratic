@@ -22,6 +22,10 @@ public class BestUtilityEVA {
 		}
 	}
 	
+	public static int getRandInRange(int low, int up) {
+		return low + (int)(Math.random() * ((up - low) + 1));
+	}
+	
 	private static int getNumberOfOffices(Scanner scanner) {
 		String numberOfOffices = scanner.nextLine();
 		return Integer.parseInt(numberOfOffices);
@@ -51,13 +55,10 @@ public class BestUtilityEVA {
 			String nume = "Birou"+ (i+1);
 			String line = scanner.nextLine();
 			String[] separator = line.split("\" ");
-			//starting from 1 because index=0 is the no of offices
+			//starting from 1 because index=0 is the no of counters
 			fillFromSeparated(acte, separator, 1);
 			int nrGhisee = Integer.parseInt(removeQuotes(separator[0]));
 			offices.add(new Birou(nume, nrGhisee, acte));
-			for(int j = 0; j < nrGhisee; j++) {
-				
-			}
 			acte.clear();
 		}
 		
@@ -88,7 +89,7 @@ public class BestUtilityEVA {
 		
 		for(Birou office : offices) {
 			System.out.println(office.getNume() + " cu " + office.getNrGhisee() + " ghisee " + "poate emite urmatoarele acte:");
-			List<Act> acte = office.getActe();
+			List<Act> acte = office.getGhisee().get(0).getActe();
 			for(Act act : acte) {
 				System.out.print(act.getNume() + ", ");
 			}
