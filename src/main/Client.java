@@ -46,6 +46,7 @@ public class Client implements Runnable{
 
 	private void cereDocument(Act act, List<Birou> birouri, List<Document> documente) {
 		boolean gasit = false, gasitToateActeleNecesare = true, doc = false;
+		System.out.println("Am nevoie de: "+act.getNume());
 		for (int i = 0; i < birouri.size(); i++) {
 			// PUS DOAR CA SA EVITE EROARE DE COMPILARE, INCA O PARSARE E
 			// NECESARE( a ghiseelor )
@@ -58,6 +59,12 @@ public class Client implements Runnable{
 							if (documente.get(j).getNume().equals(act.getNume()) && documente.get(j).getLuat() == 0) {
 								// Act is in fact a Document
 								documente.get(j).setLuat(1);
+								//TODO daca de exemplu niciun birou nu emite certif de nastere, si vrem permis de conducere
+								//el nu o sa fie eliberat la final, dar in cazul buletinului necesar permisului 
+								//ne spune ca a fost luat
+								//desi si el are nevoie de certif de nastere, ceea ce inseamna ca daca un document are nevoie 
+								//de alt document ca sa fie eliberat, pt documentul interior nu o sa se parcurga 
+								//toata actele necesare
 								doc = true;
 								List<Act> acteNecesare = documente.get(j).getActe();
 								for (int k = 0; k < acteNecesare.size(); k++) {

@@ -18,12 +18,17 @@ public class Main {
 		List<Document> documents = new ArrayList<Document>();
 		
 		Act act1 = new Act("buletin");
-		Act act2 = new Act("diploma de bacalaureat");
+		Act act2 = new Act("permis de conducere");
 		
 		try {
 			BestUtilityEVA.readConfigurationFile(offices, documents);
+			
+			//List<Document> documents2 = new ArrayList<Document>();
+			//documents2.addAll(documents);
+			
 			Client client1 = new Client(act1, documents, offices);
 			Client client2 = new Client(act2, documents, offices);
+			
 			ExecutorService executor = Executors.newFixedThreadPool(offices.size());
 			for(Birou birou : offices) {
 				executor.execute(birou);
