@@ -42,7 +42,7 @@ public class Birou implements Runnable {
 
 		while(true) {
 			int index = BestUtilityEVA.getRandInRange(0, ghisee.size() - 1);
-			System.out.println("Ghiseul "+index+ " de la Biroul "+nume+" o sa fie inchis");
+			System.out.println("Ghiseul " + (index+1) + " de la "+ nume + " o sa fie inchis");
 			ghisee.get(index).setClosed(true);
 			try {
 				Thread.sleep(4000);
@@ -52,7 +52,6 @@ public class Birou implements Runnable {
 			}
 			ghisee.get(index).setClosed(false);
 			//System.out.println("Works");
-			
 		}
 		
 	}

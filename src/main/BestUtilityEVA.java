@@ -52,7 +52,7 @@ public class BestUtilityEVA {
 		
 		// initializing offices and assign them the documents they can delivery
 		for(int i = 0; i < numberOfOffices; ++i) {
-			String nume = "Birou"+ (i+1);
+			String nume = "Biroul "+ (i+1);
 			String line = scanner.nextLine();
 			String[] separator = line.split("\" ");
 			//starting from 1 because index=0 is the no of counters

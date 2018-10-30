@@ -48,23 +48,16 @@ public class Client implements Runnable{
 		boolean gasit = false, gasitToateActeleNecesare = true, doc = false;
 		System.out.println("Am nevoie de: "+act.getNume());
 		for (int i = 0; i < birouri.size(); i++) {
-			// PUS DOAR CA SA EVITE EROARE DE COMPILARE, INCA O PARSARE E
-			// NECESARE( a ghiseelor )
 			for (int l = 0; l < birouri.get(i).getNrGhisee(); l++) {
 				if (!birouri.get(i).getGhisee().get(l).isClosed()) {
+					System.out.println("Ghiseul " + (l+1) + " de la Biroul " + (i+1) + " este deschis");
 					if (birouri.get(i).getGhisee().get(l).cautAct(act) && !gasit) {
 						// Act was found in an office
 						gasit = true;
 						for (int j = 0; j < documente.size(); j++) {
+							System.out.println("Nume " + documente.get(j).getNume() + "Luat " + documente.get(j).getLuat());
 							if (documente.get(j).getNume().equals(act.getNume()) && documente.get(j).getLuat() == 0) {
 								// Act is in fact a Document
-								documente.get(j).setLuat(1);
-								//TODO daca de exemplu niciun birou nu emite certif de nastere, si vrem permis de conducere
-								//el nu o sa fie eliberat la final, dar in cazul buletinului necesar permisului 
-								//ne spune ca a fost luat
-								//desi si el are nevoie de certif de nastere, ceea ce inseamna ca daca un document are nevoie 
-								//de alt document ca sa fie eliberat, pt documentul interior nu o sa se parcurga 
-								//toata actele necesare
 								doc = true;
 								List<Act> acteNecesare = documente.get(j).getActe();
 								for (int k = 0; k < acteNecesare.size(); k++) {
@@ -73,30 +66,41 @@ public class Client implements Runnable{
 								for (int k = 0; k < acteNecesare.size(); k++) {
 									if (acteNecesare.get(k).getLuat() == 0) {
 										gasitToateActeleNecesare = false;
+										break;
 									}
 								}
+								if(gasitToateActeleNecesare) {
+									documente.get(j).setLuat(1);
+								}
+								break;
 							}
 						}
 						if (doc == true) {
 							if (!gasitToateActeleNecesare) {
-								// I am a document and I don't have all the
-								// necessary acts
+								// I am a document and I don't have all the necessary acts
 								System.out.println("Documentul " + act.getNume() + " nu poate fi eliberat.");
-							} else {
-								// I am a document and I have all the necessary
-								// acts
-								act.setLuat();
+								return; 
+							} 
+							else {
+								// I am a document and I have all the necessary acts
+								act.setLuat();  
 								System.out.println("Documentul " + act.getNume() + " a fost gasit si luat.");
-								return;
+								return; 
 							}
-						} else {
+						} 
+						else {
 							// Act doesn't need other acts
 							act.setLuat();
 							System.out.println("Actul " + act.getNume() + " a fost gasit si luat.");
+							return; 
 						}
 					}
-				} else {
-					System.out.println("Ghiseul este inchis");
+					else {
+						continue;
+					}
+				} 
+				else {
+					System.out.println("Ghiseul " + (l+1) + " de la Biroul " + (i+1) + " este inchis");
 				}
 			}
 		}
