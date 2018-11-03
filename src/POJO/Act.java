@@ -21,7 +21,7 @@ public class Act {
 		return luat;
 	}
 	
-	public void setLuat() {
-		this.luat = 1;
+	public void setLuat(int luat) {
+		this.luat = luat;
 	}
 }

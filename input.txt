@@ -5,8 +5,8 @@
 "2" "pasaport" "viza" "permis de conducere" "cazier"
 
 "buletin" "certificat de nastere" "certificat de casatorie" "contract locuinta"
-"diploma de bacalaureat" "buletin"
-"diploma de licenta" "carnet de student" "legitimatie de student"
+"diploma de bacalaureat" "buletin" "certificat de nastere"
+"diploma de licenta" "diploma de bacalaureat" "buletin" "carnet de student" "legitimatie de student"
 "carnet de student" "cazier" "viza"
 "titlu de proprietate" "buletin"
 "pasaport" "buletin"

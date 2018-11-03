@@ -8,7 +8,7 @@ public class Document {
 	// the name of the document
 	private String nume;
 	// the other documents we need to have in order to get this document
-	private List<Act> acte = new ArrayList<>();
+	private List<Act> acte = new ArrayList<Act>();
 	private int luat = 0;
 
 	public int getLuat() {

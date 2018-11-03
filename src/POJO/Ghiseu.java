@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Ghiseu {
 
-	private boolean closed;
+	private boolean closed = false;  //ar trebui setat pe ceva de la inceput
 	private List<Act> acte = new ArrayList<Act>();
 	
 	public List<Act> getActe() {

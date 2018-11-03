@@ -14,27 +14,39 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		List<Birou> offices = new ArrayList<Birou>();
-		List<Document> documents = new ArrayList<Document>();
+		List<Birou> birouri = new ArrayList<Birou>();
+		List<Document> documente = new ArrayList<Document>();
 		
 		Act act1 = new Act("buletin");
 		Act act2 = new Act("diploma de bacalaureat");
-		Act act3 = new Act("cazier");
+		Act act3 = new Act("diploma de licenta");
+		Act act4 = new Act("buletin");
+		Act act5 = new Act("buletin");
+		Act act6 = new Act("buletin");
+		Act act7 = new Act("buletin");
 		
 		try {
-			BestUtilityEVA.readConfigurationFile(offices, documents);
+			BestUtilityEVA.readConfigurationFile(birouri, documente);
 			
-			ExecutorService executor = Executors.newFixedThreadPool(offices.size());
-			for(Birou birou : offices) {
+			ExecutorService executor = Executors.newFixedThreadPool(birouri.size());
+			for(Birou birou : birouri) {
 				executor.execute(birou);
 			}
 		
-			Client client1 = new Client(act1, documents, offices);
-			Client client2 = new Client(act2, documents, offices);
-			Client client3 = new Client(act3, documents, offices);
+			Client client1 = new Client("c1", act1, documente, birouri);
+			Client client2 = new Client("c2", act2, documente, birouri);
+			Client client3 = new Client("c3", act3, documente, birouri);
+			Client client4 = new Client("c4", act4, documente, birouri);
+			Client client5 = new Client("c5", act5, documente, birouri);
+			Client client6 = new Client("c6", act6, documente, birouri);
+			Client client7 = new Client("c7", act7, documente, birouri);
 			Thread th1 = new Thread(client1);
 			Thread th2 = new Thread(client2);
 			Thread th3 = new Thread(client3);
+			Thread th4 = new Thread(client4);
+			Thread th5 = new Thread(client5);
+			Thread th6 = new Thread(client6);
+			Thread th7 = new Thread(client7);
 			
 			// uncomment in case of emergency
 			/*try {
@@ -43,9 +55,19 @@ public class Main {
 				e.printStackTrace();
 			}*/
 			
-			th1.run();
-			th2.run();
-			th3.run();
+//			th1.start(); // nu se apeleaza run
+			th2.start();
+			th3.start();
+//			th4.start();
+//			th5.start();
+//			th6.start();
+//			th7.start();
+			
+			
+			
+//			client1.run();
+//			client2.run();
+//			client3.run();
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

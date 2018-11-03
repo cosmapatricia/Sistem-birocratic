@@ -96,7 +96,7 @@ public class BestUtilityEVA {
 			System.out.println();
 		}
 		
-		System.out.println("\n");
+		System.out.println();
 	}
 	
 	public static void printDocuments(List<Document> documents) {
@@ -110,6 +110,6 @@ public class BestUtilityEVA {
 			System.out.println();
 		}
 		
-		System.out.println("\n");
+		System.out.println();
 	}
 }
