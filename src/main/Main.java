@@ -58,11 +58,11 @@ public class Main {
 //			th1.start(); // nu se apeleaza run
 			th2.start();
 			th3.start();
-//			th4.start();
-//			th5.start();
+			th4.start();
+			th5.start();
 //			th6.start();
 //			th7.start();
-			
+		
 			
 			
 //			client1.run();

@@ -63,16 +63,16 @@ public class Client implements Runnable{
 		for (int i = 0; i < birouri.size(); i++) {
 			for (int l = 0; l < birouri.get(i).getNrGhisee(); l++) {
 				if (!birouri.get(i).getGhisee().get(l).isClosed()) {
-					//System.out.println("Ghiseul " + (l+1) + " de la Biroul " + (i+1) + " este deschis");
+					System.out.println("\\Clientul "+this.nume+"/ "+"Ghiseul " + (l+1) + " de la Biroul " + (i+1) + " este deschis");
 					if (!gasit && birouri.get(i).getGhisee().get(l).cautAct(act)) { //pt gasit=1 o sa se parcurga birouri in cont inutil, trebuie mutat if(!gasit) dupa primul for
 						// Act was found in an office
 						gasit = true;
 						for (int j = 0; j < documente.size(); j++) {
-							System.out.println("\\Clientul "+this.nume+"/ "+"Nume document: " + documente.get(j).getNume() + "| Luat: " + documente.get(j).getLuat());
+							//System.out.println("\\Clientul "+this.nume+"/ "+"Nume document: " + documente.get(j).getNume() + "| Luat: " + documente.get(j).getLuat());
 							if (documente.get(j).getNume().equals(act.getNume())) {
 								// Act is in fact a Document
 								doc = true;
-								if(documente.get(j).getLuat() == 0) {
+								//if(documente.get(j).getLuat() == 0) {
 									List<Act> acteNecesare = documente.get(j).getActe();
 									for (int k = 0; k < acteNecesare.size(); k++) {
 										cereDocument(acteNecesare.get(k), birouri, documente);
@@ -86,7 +86,7 @@ public class Client implements Runnable{
 									if(gasitToateActeleNecesare) {
 //										try {
 //											mutex.acquire();
-											documente.get(j).setLuat(1);
+											//documente.get(j).setLuat(1);
 //										} catch (InterruptedException e) {
 //											// TODO Auto-generated catch block
 //											e.printStackTrace();
@@ -101,11 +101,11 @@ public class Client implements Runnable{
 										//I am a document and I don't have all the necessary acts
 										System.out.println("\\Clientul "+this.nume+"/ "+"Documentul " + act.getNume() + " nu poate fi eliberat.");
 									}
-								}
-								else {
-									act.setLuat(1);
-									System.out.println("\\Clientul "+this.nume+"/ "+"Documentul "+documente.get(j).getNume()+" a fost luat deja.");
-								}
+								//}
+//								else {
+//									act.setLuat(1);
+//									System.out.println("\\Clientul "+this.nume+"/ "+"Documentul "+documente.get(j).getNume()+" a fost luat deja.");
+//								}
 								//break;
 							}
 						}
@@ -140,7 +140,7 @@ public class Client implements Runnable{
 					}
 				} 
 				else {
-					//System.out.println("Ghiseul " + (l+1) + " de la Biroul " + (i+1) + " este inchis");
+					System.out.println("\\Clientul "+this.nume+"/ "+"Ghiseul " + (l+1) + " de la Biroul " + (i+1) + " este inchis");
 				}
 			}
 		}
