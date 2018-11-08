@@ -45,14 +45,13 @@ public class Birou implements Runnable {
 			System.out.println("Ghiseul " + (index+1) + " de la "+ nume + " o sa fie inchis");
 			ghisee.get(index).setClosed(true);
 			try {
-				Thread.sleep(5);
+				Thread.sleep(30000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				System.out.println("Problems mit dem Threads, m8.");
 			}
 			ghisee.get(index).setClosed(false);
 			System.out.println("Ghiseul " + (index+1) + " de la "+ nume + " o sa fie deschis");
-			//System.out.println("Works");
 		}
 		
 	}

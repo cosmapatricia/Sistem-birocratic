@@ -2,7 +2,6 @@ package main;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 
 import POJO.Birou;
 import POJO.Act;
@@ -14,7 +13,6 @@ public class Client implements Runnable{
 	private Act act;
 	private List<Document> documente = new ArrayList<Document>();
 	private List<Birou> birouri = new ArrayList<Birou>();
-	private final Semaphore mutex = new Semaphore(1);
 
 	public Client(String nume, Act act, List<Document> documente, List<Birou> birouri) {
 		this.nume = nume;
@@ -48,7 +46,6 @@ public class Client implements Runnable{
 		this.birouri = birouri;
 	}
 
-
 	public Act getAct() {
 		return act;
 	}
@@ -59,20 +56,25 @@ public class Client implements Runnable{
 
 	private void cereDocument(Act act, List<Birou> birouri, List<Document> documente) {
 		boolean gasit = false, gasitToateActeleNecesare = true, doc = false;
-		System.out.println("\\Clientul "+this.nume+"/ "+"Am nevoie de: "+act.getNume());
+		System.out.println("Clientul " + this.nume + ": " + " Am nevoie de: " + act.getNume());
 		for (int i = 0; i < birouri.size(); i++) {
 			for (int l = 0; l < birouri.get(i).getNrGhisee(); l++) {
 				if (!birouri.get(i).getGhisee().get(l).isClosed()) {
-					System.out.println("\\Clientul "+this.nume+"/ "+"Ghiseul " + (l+1) + " de la Biroul " + (i+1) + " este deschis");
-					if (!gasit && birouri.get(i).getGhisee().get(l).cautAct(act)) { //pt gasit=1 o sa se parcurga birouri in cont inutil, trebuie mutat if(!gasit) dupa primul for
+					//System.out.println("Clientul " + this.nume+": " + " Ghiseul " + (l+1) + " de la Biroul " + (i+1) + " este deschis");
+					if (!gasit && birouri.get(i).getGhisee().get(l).cautAct(act)) { 
 						// Act was found in an office
-						gasit = true;
-						for (int j = 0; j < documente.size(); j++) {
-							//System.out.println("\\Clientul "+this.nume+"/ "+"Nume document: " + documente.get(j).getNume() + "| Luat: " + documente.get(j).getLuat());
-							if (documente.get(j).getNume().equals(act.getNume())) {
-								// Act is in fact a Document
-								doc = true;
-								//if(documente.get(j).getLuat() == 0) {
+						synchronized(birouri.get(i).getGhisee().get(l)) {
+							gasit = true;
+							/*try {
+								System.out.println(this.nume + " waits 2 s");
+								Thread.sleep(2000);
+							} catch(InterruptedException e) {
+								e.printStackTrace();
+							}*/
+							for (int j = 0; j < documente.size(); j++) {
+								if (documente.get(j).getNume().equals(act.getNume())) {
+									// Act is in fact a Document
+									doc = true;
 									List<Act> acteNecesare = documente.get(j).getActe();
 									for (int k = 0; k < acteNecesare.size(); k++) {
 										cereDocument(acteNecesare.get(k), birouri, documente);
@@ -84,94 +86,41 @@ public class Client implements Runnable{
 										}
 									}
 									if(gasitToateActeleNecesare) {
-//										try {
-//											mutex.acquire();
-											//documente.get(j).setLuat(1);
-//										} catch (InterruptedException e) {
-//											// TODO Auto-generated catch block
-//											e.printStackTrace();
-//										} finally {
-//											mutex.release();
-//										}
 										// I am a document and I have all the necessary acts
-										act.setLuat(1);  //necesar? eventual pt cazul cand pt diploma bac buletin se considera act
-										System.out.println("\\Clientul "+this.nume+"/ "+"Documentul " + act.getNume() + " a fost gasit si luat.");
+										act.setLuat(1);  
+										System.out.println("Clientul " + this.nume + ": " + " Documentul " + act.getNume() + " a fost gasit si luat.");
 									}
-									else{
+									else {
 										//I am a document and I don't have all the necessary acts
-										System.out.println("\\Clientul "+this.nume+"/ "+"Documentul " + act.getNume() + " nu poate fi eliberat.");
+										System.out.println("Clientul " + this.nume + ": " + " Documentul " + act.getNume() + " nu poate fi eliberat.");
 									}
-								//}
-//								else {
-//									act.setLuat(1);
-//									System.out.println("\\Clientul "+this.nume+"/ "+"Documentul "+documente.get(j).getNume()+" a fost luat deja.");
-//								}
-								//break;
+								}
 							}
-						}
-//						if (doc == true) {
-//							if (!gasitToateActeleNecesare) {
-//								// I am a document and I don't have all the necessary acts
-//								System.out.println("\\Clientul "+this.nume+"/ "+"Documentul " + act.getNume() + " nu poate fi eliberat.");
-//								return; 
-//							} 
-//							else {
-//								// I am a document and I have all the necessary acts
-//								act.setLuat(1);  //necesar? eventual pt cazul cand pt diploma bac buletin se considera act
-//								System.out.println("\\Clientul "+this.nume+"/ "+"Documentul " + act.getNume() + " a fost gasit si luat.");
-//								return; 
-//							}
-//						} 
-//						else {
-//							// Act doesn't need other acts
-//							act.setLuat(1);
-//							System.out.println("\\Clientul "+this.nume+"/ "+"Actul " + act.getNume() + " a fost gasit si luat.");
-//							return; 
-//						}
-						if(!doc){
-							// Act doesn't need other acts
-							act.setLuat(1);
-							System.out.println("\\Clientul "+this.nume+"/ "+"Actul " + act.getNume() + " a fost gasit si luat.");
+							if(!doc){
+								// Act doesn't need other acts
+								act.setLuat(1);
+								System.out.println("Clientul " + this.nume+": " + " Actul " + act.getNume() + " a fost gasit si luat.");
+							}
 						}
 					}
 					else {
-						break;//continue; //nu e bun, sare la urm ghiseu, trebuie break ca sa iasa din for-ul cu ghisee si
-						//sa treaca la urm birou
+						break;
 					}
 				} 
 				else {
-					System.out.println("\\Clientul "+this.nume+"/ "+"Ghiseul " + (l+1) + " de la Biroul " + (i+1) + " este inchis");
+					System.out.println("Clientul " + this.nume + ": " + " Ghiseul " + (l+1) + " de la Biroul " + (i+1) + " este inchis");
 				}
 			}
 		}
 		if (!gasit) {
 			// Act wasn't found in any office
-			System.out.println("\\Clientul "+this.nume+"/ "+"Actul " + act.getNume() + " nu exista.");
+			System.out.println("Clientul " + this.nume + ": " + " Actul " + act.getNume() + " nu exista.");
 		}
-	}
-	
-	//se repune luat=0 pt. toate documentele din lista dupa ce aceasta a fost consultata de un client
-	private void resetListaDocumente() {
-		for(Document d : documente)
-			d.setLuat(0);
 	}
 	
 	@Override
 	public void run() {
-//		try {
-//			mutex.acquire();
-		//apar probleme cand de ex un client cere diploma de bac, unul cere diploma de licenta, si primul obtine diploma
-		//de bac, se reseteaza luat pe lista de doc, si chiar daca s-a luat buletinul pt diploma de bac necesara
-		//diplomei de licenta, se mai ia o data si ca act necesar separat pt diploma de licenta (cand e pus semaforul)
-			cereDocument(act, birouri, documente);
-			resetListaDocumente();	
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} finally {
-//			mutex.release();
-//		}
-						
+		cereDocument(act, birouri, documente);		
 	}
 
 }

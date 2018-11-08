@@ -17,13 +17,13 @@ public class Main {
 		List<Birou> birouri = new ArrayList<Birou>();
 		List<Document> documente = new ArrayList<Document>();
 		
-		Act act1 = new Act("buletin");
+		Act act1 = new Act("carnet de student");
 		Act act2 = new Act("diploma de bacalaureat");
 		Act act3 = new Act("diploma de licenta");
-		Act act4 = new Act("buletin");
+		Act act4 = new Act("permis de conducere");
 		Act act5 = new Act("buletin");
-		Act act6 = new Act("buletin");
-		Act act7 = new Act("buletin");
+		Act act6 = new Act("certificat de nastere");
+		Act act7 = new Act("contract locuinta");
 		
 		try {
 			BestUtilityEVA.readConfigurationFile(birouri, documente);
@@ -55,26 +55,17 @@ public class Main {
 				e.printStackTrace();
 			}*/
 			
-//			th1.start(); // nu se apeleaza run
+			th1.start(); 
 			th2.start();
 			th3.start();
 			th4.start();
 			th5.start();
-//			th6.start();
-//			th7.start();
-		
-			
-			
-//			client1.run();
-//			client2.run();
-//			client3.run();
+			th6.start();
+			th7.start();
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.out.println("The configuration file wasn't found!");
 		}
-		
-		
-		
 	}
 }
