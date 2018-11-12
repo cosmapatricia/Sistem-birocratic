@@ -52,6 +52,11 @@ public class Birou implements Runnable {
 			}
 			ghisee.get(index).setClosed(false);
 			System.out.println("Ghiseul " + (index+1) + " de la "+ nume + " o sa fie deschis");
+			
+			if(BestUtilityEVA.allClientsEnded()) {
+				System.out.println("Biroul " + this.nume + " se opreste.");
+				break;
+			}
 		}
 		
 	}

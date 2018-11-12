@@ -1,9 +1,11 @@
 4
+// number of counters - what documents they can deliver
 "3" "certificat de nastere" "buletin" "certificat de casatorie" "certificat de deces"
 "2" "diploma de bacalaureat" "diploma de licenta" "carnet de student" "legitimatie de student" "card biblioteca"
 "2" "titlu de proprietate" "card de debit" "contract locuinta"
 "2" "pasaport" "viza" "permis de conducere" "cazier"
 
+// document - what documents are needed in order to obtain it
 "buletin" "certificat de nastere" "certificat de casatorie" "contract locuinta"
 "diploma de bacalaureat" "buletin"
 "diploma de licenta" "diploma de bacalaureat" "carnet de student" "legitimatie de student"
@@ -11,3 +13,12 @@
 "titlu de proprietate" "buletin"
 "pasaport" "buletin"
 "permis de conducere" "buletin" "cazier"
+
+// Clients with the documents that they want
+Lovecraft1 "buletin"
+Dostoievski2 "diploma de bacalaureat"
+Delaney3 "diploma de licenta"
+Descartes4 "permis de conducere"
+Gilmour5 "buletin"
+Page6 "certificat de nastere"
+//Dragnea7 "contract locuinta"

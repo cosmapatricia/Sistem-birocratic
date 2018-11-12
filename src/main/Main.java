@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import POJO.Act;
 import POJO.Birou;
 import POJO.Document;
 
@@ -14,54 +13,47 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
+		/*
+		 * TO BE DELETED
+		 * nu am modificat algoritmul de parsare, nimic din partea aia
+		 * am pus clientii in input.txt, pot fi comentati
+		 * in clasa Singleton, e un array de boolene, fiecare client seteaza cate un boolean pe true
+		 * cand toate boolenele sunt pe true, birourile se opresc(dupa ce isi termina sleep)
+		 */
+		
 		List<Birou> birouri = new ArrayList<Birou>();
 		List<Document> documente = new ArrayList<Document>();
-		
-		Act act1 = new Act("carnet de student");
-		Act act2 = new Act("diploma de bacalaureat");
-		Act act3 = new Act("diploma de licenta");
-		Act act4 = new Act("permis de conducere");
-		Act act5 = new Act("buletin");
-		Act act6 = new Act("certificat de nastere");
-		Act act7 = new Act("contract locuinta");
+		List<Client> clients = new ArrayList<Client>();
 		
 		try {
-			BestUtilityEVA.readConfigurationFile(birouri, documente);
+			BestUtilityEVA.readConfigurationFile(birouri, documente, clients);
 			
-			ExecutorService executor = Executors.newFixedThreadPool(birouri.size());
+			List<Thread> officeThreads = new ArrayList<Thread>();
+			int currentThread = 0;
+			for(Birou birou : birouri) {
+				officeThreads.add(new Thread(birou));
+				officeThreads.get(currentThread++).start();
+			}
+			
+			// maybe we are not allowed to use executorService
+			/*ExecutorService executor = Executors.newFixedThreadPool(birouri.size());
 			for(Birou birou : birouri) {
 				executor.execute(birou);
-			}
-		
-			Client client1 = new Client("c1", act1, documente, birouri);
-			Client client2 = new Client("c2", act2, documente, birouri);
-			Client client3 = new Client("c3", act3, documente, birouri);
-			Client client4 = new Client("c4", act4, documente, birouri);
-			Client client5 = new Client("c5", act5, documente, birouri);
-			Client client6 = new Client("c6", act6, documente, birouri);
-			Client client7 = new Client("c7", act7, documente, birouri);
-			Thread th1 = new Thread(client1);
-			Thread th2 = new Thread(client2);
-			Thread th3 = new Thread(client3);
-			Thread th4 = new Thread(client4);
-			Thread th5 = new Thread(client5);
-			Thread th6 = new Thread(client6);
-			Thread th7 = new Thread(client7);
-			
-			// uncomment in case of emergency
-			/*try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}*/
+		
+			List<Thread> clientThreads = new ArrayList<Thread>();
+			currentThread = 0;
+			for(Client client : clients) {
+				clientThreads.add(new Thread(client));
+				clientThreads.get(currentThread++).start();
+			}
 			
-			th1.start(); 
-			th2.start();
-			th3.start();
-			th4.start();
-			th5.start();
-			th6.start();
-			th7.start();
+			// works just as fine with the same instance starting all threads
+			/*Thread thread;
+			for(Client client : clients) {
+				thread = new Thread(client);
+				thread.start();
+			}*/
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

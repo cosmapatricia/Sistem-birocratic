@@ -13,9 +13,11 @@ public class Client implements Runnable{
 	private Act act;
 	private List<Document> documente = new ArrayList<Document>();
 	private List<Birou> birouri = new ArrayList<Birou>();
+	private int id;
 
-	public Client(String nume, Act act, List<Document> documente, List<Birou> birouri) {
+	public Client(String nume, int id, Act act, List<Document> documente, List<Birou> birouri) {
 		this.nume = nume;
+		this.id = id;
 		this.act = act;
 		this.documente.addAll(documente);
 		this.birouri.addAll(birouri);
@@ -121,6 +123,12 @@ public class Client implements Runnable{
 	@Override
 	public void run() {
 		cereDocument(act, birouri, documente);		
+		System.out.println("<----- CLIENTUL " + this.nume + " A OBTINUT DOCUMENTUL DORIT. ------>");
+		try{
+			Singleton.getInstance()[id] = true;
+		} catch(IllegalStateException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
