@@ -125,7 +125,8 @@ public class Client implements Runnable{
 		cereDocument(act, birouri, documente);		
 		System.out.println("<----- CLIENTUL " + this.nume + " A OBTINUT DOCUMENTUL DORIT. ------>");
 		try{
-			Singleton.getInstance()[id] = true;
+			//Singleton.getInstance()[id] = true;
+			Singleton.setBoolean(id, true);
 		} catch(IllegalStateException e) {
 			e.printStackTrace();
 		}

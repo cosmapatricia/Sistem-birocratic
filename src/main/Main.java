@@ -55,6 +55,18 @@ public class Main {
 				thread.start();
 			}*/
 			
+			boolean shouldEnd = false;
+			
+			do{
+				shouldEnd = BestUtilityEVA.allClientsEnded();
+				if(shouldEnd) {
+					for(Thread thread : officeThreads) {
+						// this ends the thread even if it sleeps
+						thread.interrupt();
+					}
+				}
+			} while(!shouldEnd); 
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.out.println("The configuration file wasn't found!");

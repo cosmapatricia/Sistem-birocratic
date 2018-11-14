@@ -21,4 +21,12 @@ public class Singleton {
 		return checks;
 	}
 	
+	public static synchronized void setBoolean(int position, boolean value) {
+		if(checks == null) {
+			throw new IllegalStateException("checks were not initialized");
+		}
+		
+		checks[position] = value;
+	}
+	
 }
